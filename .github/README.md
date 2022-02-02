@@ -1,2 +1,0 @@
-# .github
-GitHub configuration files
