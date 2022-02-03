@@ -4,10 +4,9 @@ from pathlib import Path
 
 import geopandas
 
-# import pandas
-
 
 def tweak_nw(df):
+    """Prepare the dataset for further exploration."""
     return df.drop(
         [
             "FT_BIKE_01",

@@ -17,6 +17,7 @@
 .eggs/
 .idea/
 .installed.cfg
+.ipynb_checkpoints
 .nox/
 .python-version
 .tox/
