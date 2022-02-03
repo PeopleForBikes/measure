@@ -1,8 +1,12 @@
 src_dir := "measure"
 
+
 # Setup the environment.
 setup:
-    conda env create --file environment.yaml || conda env update --file environment.yaml
+    conda env create --file environment-{{os()}}-{{arch()}}.yaml \
+      || conda env update --file environment-{{os()}}-{{arch()}}.yaml \
+      || conda env create --file environment.yaml \
+      || conda env update --file environment.yaml
 
 # Meta task running ALL the CI tasks at onces.
 ci: lint test
@@ -36,7 +40,8 @@ fmt-python:
 
 # Save environment
 conda-export:
-    conda env export > environment.yaml
+    conda env export --from-history > environment.yaml
+    conda env export > environment-{{os()}}-{{arch()}}.yaml
 
 # Run the unit tests.
 test:
