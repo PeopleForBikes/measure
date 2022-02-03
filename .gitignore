@@ -24,6 +24,7 @@
 __pycache__/
 build/
 coverage.xml
+data/*.zip
 develop-eggs/
 dist/
 docs/_build/

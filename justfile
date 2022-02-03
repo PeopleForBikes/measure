@@ -2,7 +2,7 @@ src_dir := "measure"
 
 # Setup the environment.
 setup:
-    conda env create --file environment.yaml
+    conda env create --file environment.yaml || conda env update --file environment.yaml
 
 # Meta task running ALL the CI tasks at onces.
 ci: lint test
