@@ -23,4 +23,5 @@ dependencies:
   - pytest-mock
   - myst-parser
   - jupyterlab
+  - nbstripout
 prefix: /opt/homebrew/Caskroom/miniforge/base/envs/measure
