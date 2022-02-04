@@ -30,6 +30,8 @@ jobs:
       - name: Setup the project
         run: just setup
       - run: echo $CONDA/envs/$CONDA_ENV/bin >> $GITHUB_PATH
+      - run: |
+          conda info
       - name: Lint markdown files
         run: just lint-md
       - name: Lint Python files
