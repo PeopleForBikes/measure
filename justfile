@@ -41,6 +41,7 @@ fmt-python:
 conda-export:
     conda env export --from-history > environment.yaml
     conda env export > environment-{{ os() }}-{{ arch() }}.yaml
+    conda env export --from-history --json| jq -r '.dependencies | flatten[]' | sort > requirements.txt
 
 # Run the unit tests.
 test:
