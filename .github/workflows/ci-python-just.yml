@@ -21,17 +21,20 @@ jobs:
       - name: Cache conda
         uses: actions/cache@v2
         with:
-          path: ~/conda_pkgs_dir
+          path: |
+            /usr/share/miniconda/pkgs
+            /home/runner/.conda/pkgs
+            /usr/share/miniconda/envs
+            /home/runner/.conda/envs
           key:
-            ${{ runner.os }}-conda-${{ hashFiles('environment.yaml') }}
+            ${{ runner.os }}-conda-${{ hashFiles('environment.yaml') }}.0
       - uses: actions/setup-python@v2
         with:
           python-version: "3.10"
       - name: Setup the project
         run: just setup
       - run: echo $CONDA/envs/$CONDA_ENV/bin >> $GITHUB_PATH
-      - run: |
-          conda info
+      - run: conda info
       - name: Lint markdown files
         run: just lint-md
       - name: Lint Python files
@@ -49,9 +52,13 @@ jobs:
       - name: Cache conda
         uses: actions/cache@v2
         with:
-          path: ~/conda_pkgs_dir
+          path: |
+            /usr/share/miniconda/pkgs
+            /home/runner/.conda/pkgs
+            /usr/share/miniconda/envs
+            /home/runner/.conda/envs
           key:
-            ${{ runner.os }}-conda-${{ hashFiles('environment.yaml') }}
+            ${{ runner.os }}-conda-${{ hashFiles('environment.yaml') }}.0
       - uses: actions/setup-python@v2
         with:
           python-version: "3.10"
