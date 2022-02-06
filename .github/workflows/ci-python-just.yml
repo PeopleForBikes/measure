@@ -21,11 +21,7 @@ jobs:
       - name: Cache conda
         uses: actions/cache@v2
         with:
-          path: |
-            /usr/share/miniconda/pkgs
-            /home/runner/.conda/pkgs
-            /usr/share/miniconda/envs
-            /home/runner/.conda/envs
+          path: /usr/share/miniconda/envs
           key:
             ${{ runner.os }}-conda-${{ hashFiles('environment.yaml') }}.0
       - uses: actions/setup-python@v2
@@ -52,11 +48,7 @@ jobs:
       - name: Cache conda
         uses: actions/cache@v2
         with:
-          path: |
-            /usr/share/miniconda/pkgs
-            /home/runner/.conda/pkgs
-            /usr/share/miniconda/envs
-            /home/runner/.conda/envs
+          path: /usr/share/miniconda/envs
           key:
             ${{ runner.os }}-conda-${{ hashFiles('environment.yaml') }}.0
       - uses: actions/setup-python@v2
