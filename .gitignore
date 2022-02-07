@@ -40,6 +40,7 @@ parts/
 pip-delete-this-directory.txt
 pip-log.txt
 profile.svg
+results/*
 sdist/
 target/
 var/

@@ -18,6 +18,7 @@ Run `just -l` to see the list of provided tasks.
 - docs: the Sphinx documentation of the project
 - measure: project source code
 - notebooks: notebooks relevant to the project
+- results: stores the results of the operations
 - tests: project unit tests
 
 ## Contributing
