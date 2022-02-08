@@ -3,10 +3,11 @@ import csv
 from pathlib import Path
 
 import geopandas
+import pandas
 
 
 def tweak_nw(df):
-    """Prepare the dataset for further exploration."""
+    """Prepare the neighborhood_ways dataset for further exploration."""
     return df.drop(
         [
             "FT_BIKE_01",
@@ -40,35 +41,84 @@ def tweak_nw(df):
     ).assign(distance=df.length)
 
 
+def process_neighborhood_ways_shapefile(shapefile):
+    """Process neighborhood_ways shapefile."""
+    # Load the shapefile.
+    raw_gdf = geopandas.read_file(shapefile)
+
+    # Clean up the dataset.
+    gdf = tweak_nw(raw_gdf)
+
+    # Sum the distances by type.
+    grouped = gdf.groupby("FT_BIKE_IN", dropna=False).sum()
+
+    # Get the distances in km.
+    grouped["distance"] = grouped["distance"].astype(int) / 1000
+
+    # Save the results.
+    grouped_results = grouped.to_dict()["distance"]
+    country, state, city, _ = shapefile.stem.split("-")
+    grouped_results["country"] = country
+    grouped_results["state"] = state
+    grouped_results["city"] = city
+
+    return grouped_results
+
+
+def tweak_scores(df):
+    """Prepare the overall score dataset for further exploration."""
+    return (
+        df.drop(["id", "score_original", "human_explanation"], axis=1)
+        .query(
+            "score_id in ['core_services', 'opportunity', 'people', 'recreation', 'retail', 'transit']"
+        )
+        .set_index("score_id")
+    )
+
+
+def process_neighborhood_overall_scores(scorefile):
+    """Process neighborhood_overall scorefile."""
+    raw_df = pandas.read_csv(scorefile)
+    df = tweak_scores(raw_df)
+    return df.to_dict()["score_normalized"]
+
+
+def collect_city_datasets(data_dir):
+    """
+    Collect the city datasets.
+
+    If a city does not have *ALL* the datasets, it is discarded.
+    """
+    cities = {
+        "-".join(city.stem.split("-")[0:-1])
+        for city in list(data_dir.glob("*"))
+        if not city.stem.startswith(".")
+    }
+    groups = []
+    for city in cities:
+        shapefile = data_dir / f"{city}-neighborhood_ways.zip"
+        scorefile = data_dir / f"{city}-neighborhood_overall_scores.csv"
+        if shapefile.exists() and scorefile.exists():
+            groups.append((shapefile, scorefile))
+
+    return groups
+
+
 def main():
     """Define the program's main entrypoint."""
 
     # Collect the shape files to process.
-    p = Path(".")
-    shapefiles = list(p.glob("data/*neighborhood_ways.zip"))
-
-    # Process them.
+    data_dir = Path("data")
+    dataset_groups = collect_city_datasets(data_dir)
     results = []
-    for shapefile in shapefiles:
-        # Load the shapefile.
-        raw_gdf = geopandas.read_file(shapefile)
+    for dataset_group in dataset_groups:
+        shapefile = dataset_group[0]
+        scorefile = dataset_group[1]
 
-        # Clean up the dataset.
-        gdf = tweak_nw(raw_gdf)
-
-        # Sum the distances by type.
-        grouped = gdf.groupby("FT_BIKE_IN", dropna=False).sum()
-
-        # Get the distances in km.
-        grouped["distance"] = grouped["distance"].astype(int) / 1000
-
-        # Save the results.
-        grouped_results = grouped.to_dict()["distance"]
-        country, state, city, _ = shapefile.stem.split("-")
-        grouped_results["country"] = country
-        grouped_results["state"] = state
-        grouped_results["city"] = city
-        results.append(grouped_results)
+        # Process them.
+        nw_res = process_neighborhood_ways_shapefile(shapefile)
+        scores = process_neighborhood_overall_scores(scorefile)
+        results.append({**nw_res, **scores})
 
     # Display the results as JSON.
     # print(json.dumps(results, indent=2))

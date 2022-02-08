@@ -26,7 +26,11 @@ lint-python:
     pydocstyle {{ src_dir }}
 
 # Meta tasks running all formatters at once.
-fmt: fmt-md fmt-python
+fmt: fmt-md fmt-python fmt-just
+
+# Format the jusfile.
+fmt-just:
+    just --fmt --unstable
 
 # Format markdown files.
 fmt-md:
