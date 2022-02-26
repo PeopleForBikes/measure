@@ -1,3 +1,5 @@
+set positional-arguments
+
 src_dir := "measure"
 
 # Meta task running ALL the CI tasks at onces.
@@ -35,8 +37,11 @@ fmt-python:
     poetry run black {{ src_dir }}
 
 # Run the unit tests.
-test:
-    poetry run pytest -x --cov-report term-missing --cov-report html --cov={{ src_dir }}
+test *extra_args='':
+    poetry run pytest \
+      --cov-report term-missing --cov-report html --cov={{ src_dir }} \
+      --xdoctest \
+      -x $@
 
 # Strip output from Jupyter notebooks.
 notebook-strip:

@@ -91,13 +91,15 @@ confidence=
 # invalid-name                  : too complicated to configure sanely.
 # logging-format-interpolation  : does not make any sense.
 # no-self-use                   : wrong detection (i.e. pytest class tests).
-disable = broad-except,invalid-name,logging-format-interpolation,no-self-use,
+# no-member                     : does not work accurately with 3rd party libraries
+# c-extension-no-member         : does not work accurately with 3rd party libraries
+disable = broad-except,invalid-name,logging-format-interpolation,no-self-use,no-member,c-extension-no-member
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
 # multiple time (only on the command line, not in the configuration file where
 # it should appear only once). See also the "--disable" option for examples.
-enable=c-extension-no-member
+; enable=c-extension-no-member
 
 
 [REPORTS]
