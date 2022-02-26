@@ -19,7 +19,6 @@ class City:
         Convert a City to a dict using short code fields.
 
         Example:
-        -------
             >>> c = City("Portland", "USA", 645291, 54, "OR")
             >>> c.as_short_code_dict()
             {'ci': 'Portland', 'co': 'USA', 'po': 645291, 'score': 54, 'st': 'OR'}
@@ -53,15 +52,14 @@ class NetworkAnalysis:
         The score is the rounded mean value of the sum of all the fields.
 
         Example:
-        -------
             >>> na = NetworkAnalysis(
-            ... neighborhood=55,
-            ... opportunity=51,
-            ... essential_services=53,
-            ... recreation=58,
-            ... retail=57,
-            ... transit=34,
-            ... )
+                neighborhood=55,
+                opportunity=51,
+                essential_services=53,
+                recreation=58,
+                retail=57,
+                transit=34,
+                )
             >>> na.score()
             51
 
@@ -73,15 +71,14 @@ class NetworkAnalysis:
         Convert a Network Analysis to a dict using short code fields.
 
         Example:
-        -------
             >>> na = NetworkAnalysis(
-            ... neighborhood=55,
-            ... opportunity=51,
-            ... essential_services=53,
-            ... recreation=58,
-            ... retail=57,
-            ... transit=34,
-            ... )
+                neighborhood=55,
+                opportunity=51,
+                essential_services=53,
+                recreation=58,
+                retail=57,
+                transit=34,
+                )
             >>> na.as_short_code_dict()
             {'nh': 55, 'op': 51, 'es': 53, 'rec': 58, 'ret': 57, 'tr': 34}
 
@@ -112,13 +109,12 @@ class CommunitySurvey:
         The score is the rounded mean value of the sum of all the fields.
 
         Example:
-        -------
             >>> cs = CommunitySurvey(
-            ... awareness=63,
-            ... network=68,
-            ... safety=46,
-            ... ridership=78,
-            ... )
+                awareness=63,
+                network=68,
+                safety=46,
+                ridership=78,
+                )
             >>> cs.score()
             64
 
@@ -130,13 +126,12 @@ class CommunitySurvey:
         Convert a Community Survey to a dict using short code fields.
 
         Example:
-        -------
             >>> cs = CommunitySurvey(
-            ... awareness=63,
-            ... network=68,
-            ... safety=46,
-            ... ridership=78,
-            ... )
+                awareness=63,
+                network=68,
+                safety=46,
+                ridership=78,
+                )
             >>> cs.as_short_code_dict()
             {'aw': 63, 'nw': 68, 'sf': 46, 'rs': 78}
 
@@ -163,11 +158,10 @@ class ProtectedInfrastructure:
         The mileage is the sum of all the fields.
 
         Example:
-        -------
             >>> pi = ProtectedInfrastructure(
-            ... lanes=10,
-            ... off_street_paths=20,
-            ... )
+                lanes=10,
+                off_street_paths=20,
+             )
             >>> pi.mileage()
             30
 
@@ -179,11 +173,10 @@ class ProtectedInfrastructure:
         Convert a Protected Infrastructure to a dict using short code fields.
 
         Example:
-        -------
             >>> pi = ProtectedInfrastructure(
-            ... lanes=10,
-            ... off_street_paths=20,
-            ... )
+                lanes=10,
+                off_street_paths=20,
+                )
             >>> pi.as_short_code_dict()
             {'la': 10, 'osp': 20}
 
@@ -208,11 +201,10 @@ class UnprotectedInfrastructure:
         The mileage is the sum of all the fields.
 
         Example:
-        -------
             >>> ui = UnprotectedInfrastructure(
-            ... low_stress_lanes=35,
-            ... low_stress_buffered_lanes=5,
-            ... )
+                low_stress_lanes=35,
+                low_stress_buffered_lanes=5,
+                )
             >>> ui.mileage()
             40
 
@@ -224,11 +216,10 @@ class UnprotectedInfrastructure:
         Convert a Unprotected Infrastructure to a dict using short code fields.
 
         Example:
-        -------
             >>> ui = UnprotectedInfrastructure(
-            ... low_stress_lanes=35,
-            ... low_stress_buffered_lanes=5,
-            ... )
+                low_stress_lanes=35,
+                low_stress_buffered_lanes=5,
+                )
             >>> ui.as_short_code_dict()
             {'lsl': 35, 'lsbl': 5}
 
@@ -253,17 +244,16 @@ class Infrastructure:
         The mileage is the sum of all the fields.
 
         Example:
-        -------
             >>> i = Infrastructure(
-            ... ProtectedInfrastructure(
-            ...     lanes=10,
-            ...     off_street_paths=20,
-            ... ),
-            ... UnprotectedInfrastructure(
-            ...     low_stress_lanes=35,
-            ...     low_stress_buffered_lanes=5,
-            ... ),
-            ... )
+                ProtectedInfrastructure(
+                    lanes=10,
+                    off_street_paths=20,
+                ),
+                UnprotectedInfrastructure(
+                    low_stress_lanes=35,
+                    low_stress_buffered_lanes=5,
+                ),
+                )
             >>> i.mileage()
             70
 
@@ -275,17 +265,16 @@ class Infrastructure:
         Convert an Infrastructure to a dict using short code fields.
 
         Example:
-        -------
             >>> i = Infrastructure(
-            ... ProtectedInfrastructure(
-            ...     lanes=10,
-            ...     off_street_paths=20,
-            ... ),
-            ... UnprotectedInfrastructure(
-            ...     low_stress_lanes=35,
-            ...     low_stress_buffered_lanes=5,
-            ... ),
-            ... )
+                ProtectedInfrastructure(
+                    lanes=10,
+                    off_street_paths=20,
+                ),
+                UnprotectedInfrastructure(
+                    low_stress_lanes=35,
+                    low_stress_buffered_lanes=5,
+                ),
+                )
             >>> i.as_short_code_dict()
             {'pi': {'la': 10, 'osp': 20}, 'ui': {'lsl': 35, 'lsbl': 5}}
 
@@ -310,34 +299,33 @@ class ScoreCard:
         Convert a Score Card to a dict using short code fields.
 
         Example:
-        -------
             >>> s = ScoreCard(
-            ...     City("Portland", "USA", 645291, 54, "OR"),
-            ...     NetworkAnalysis(
-            ...         neighborhood=55,
-            ...         opportunity=51,
-            ...         essential_services=53,
-            ...         recreation=58,
-            ...         retail=57,
-            ...         transit=34,
-            ...     ),
-            ...     CommunitySurvey(
-            ...         awareness=63,
-            ...         network=68,
-            ...         safety=46,
-            ...         ridership=78,
-            ...     ),
-            ...     Infrastructure(
-            ...         ProtectedInfrastructure(
-            ...             lanes=10,
-            ...             off_street_paths=20,
-            ...         ),
-            ...         UnprotectedInfrastructure(
-            ...             low_stress_lanes=35,
-            ...             low_stress_buffered_lanes=5,
-            ...         ),
-            ...     )
-            ... )
+                    City("Portland", "USA", 645291, 54, "OR"),
+                    NetworkAnalysis(
+                        neighborhood=55,
+                        opportunity=51,
+                        essential_services=53,
+                        recreation=58,
+                        retail=57,
+                        transit=34,
+                    ),
+                    CommunitySurvey(
+                        awareness=63,
+                        network=68,
+                        safety=46,
+                        ridership=78,
+                    ),
+                    Infrastructure(
+                        ProtectedInfrastructure(
+                            lanes=10,
+                            off_street_paths=20,
+                        ),
+                        UnprotectedInfrastructure(
+                            low_stress_lanes=35,
+                            low_stress_buffered_lanes=5,
+                        ),
+                    )
+                )
             >>> s.as_short_code_dict()
             {'ci': 'Portland', 'co': 'USA', 'po': 645291, 'score': 54, 'st': 'OR',
             'nh': 55, 'op': 51, 'es': 53, 'rec': 58, 'ret': 57, 'tr': 34, 'aw': 63,
