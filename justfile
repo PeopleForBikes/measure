@@ -1,12 +1,5 @@
 src_dir := "measure"
 
-# Setup the environment.
-setup:
-    conda env create --file environment-{{ os() }}-{{ arch() }}.yaml \
-      || conda env update --file environment-{{ os() }}-{{ arch() }}.yaml \
-      || conda env create --file environment.yaml \
-      || conda env update --file environment.yaml
-
 # Meta task running ALL the CI tasks at onces.
 ci: lint test
 
@@ -19,11 +12,11 @@ lint-md:
 
 # Lint python files.
 lint-python:
-    isort . --check
-    black --check {{ src_dir }}
-    flake8 {{ src_dir }}
-    pylint {{ src_dir }}
-    pydocstyle {{ src_dir }}
+    poetry run isort . --check
+    poetry run black --check {{ src_dir }}
+    poetry run flake8 {{ src_dir }}
+    poetry run pylint {{ src_dir }}
+    poetry run pydocstyle {{ src_dir }}
 
 # Meta tasks running all formatters at once.
 fmt: fmt-md fmt-python fmt-just
@@ -38,19 +31,13 @@ fmt-md:
 
 # Format python files.
 fmt-python:
-    isort .
-    black {{ src_dir }}
-
-# Save environment
-conda-export:
-    conda env export --from-history > environment.yaml
-    conda env export > environment-{{ os() }}-{{ arch() }}.yaml
-    conda env export --from-history --json| jq -r '.dependencies | flatten[]' | sort > requirements.txt
+    poetry run isort .
+    poetry run black {{ src_dir }}
 
 # Run the unit tests.
 test:
-    pytest -x --cov-report term-missing --cov-report html --cov={{ src_dir }}
+    poetry run pytest -x --cov-report term-missing --cov-report html --cov={{ src_dir }}
 
 # Strip output from Jupyter notebooks.
 notebook-strip:
-    nbstripout notebooks/*.ipynb
+    poetry run nbstripout notebooks/*.ipynb
