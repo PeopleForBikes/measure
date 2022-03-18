@@ -23,14 +23,17 @@ Run `just -l` to see the list of provided tasks.
 
 ## Contributing
 
-Setup the conda environment:
+Measure uses [Poetry] as its project management tool. The
+[installation](https://python-poetry.org/docs/#installation) section of their
+documentation will guide you through the setup process.
+
+Setup the project:
 
 ```bash
-just
+poetry install
 ```
 
-This will create or update the environment and display the instructions to
-activate/deactivate it.
+This will create or update the environment.
 
 Then, place the shape files to process in the `data` directory. For now, only
 the files ending with `neighborhood_ways.zip` will be detected. The shape files
@@ -47,8 +50,9 @@ For instance, for the city of Austin, TX:
 Finally, run the project to process the file(s):
 
 ```bash
-python measure/main.py
+poetry run python measure/main.py
 ```
 
 [bna]: https://bna.peopleforbikes.org
 [just]: https://github.com/casey/just
+[poetry]: https://python-poetry.org/

@@ -3,7 +3,7 @@ set positional-arguments
 src_dir := "measure"
 
 # Meta task running ALL the CI tasks at onces.
-ci: lint test
+ci: lint docs test
 
 # Meta task running all the linters at once.
 lint: lint-md lint-python
@@ -46,3 +46,11 @@ test *extra_args='':
 # Strip output from Jupyter notebooks.
 notebook-strip:
     poetry run nbstripout notebooks/*.ipynb
+
+# Build the documentation
+docs:
+  cd docs && poetry run make html
+  @echo
+  @echo "Click this link to open the documentation in the browser:"
+  @echo "  file://${PWD}/docs/build/html/index.html"
+  @echo
