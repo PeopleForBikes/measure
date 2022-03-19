@@ -23,7 +23,7 @@ lint-python:
 # Meta tasks running all formatters at once.
 fmt: fmt-md fmt-python fmt-just
 
-# Format the jusfile.
+# Format the justfile.
 fmt-just:
     just --fmt --unstable
 
